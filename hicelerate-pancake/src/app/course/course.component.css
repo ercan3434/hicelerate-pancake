@@ -1,0 +1,13 @@
+textarea{
+    resize:none;
+}
+
+nz-table{
+    width: 80%;
+    margin: auto;
+}
+
+.tableSizing{
+    height: 65px;
+    overflow: hidden;
+}

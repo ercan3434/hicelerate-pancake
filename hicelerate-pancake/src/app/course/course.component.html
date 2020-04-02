@@ -1,0 +1,83 @@
+<nz-table #basicTable [nzData]="courses">
+    <thead>
+      <tr>
+        <th>Işletme Adı</th>
+        <th>Kurs Adı</th>
+        <th>Resim</th>
+        <th>Tarih</th>
+        <th>Liste Fiyatı</th>
+        <th>Indirimli Fiyat</th>
+        <th>Açıklama</th>
+        <th>Katılımcı Sayısı</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.businessName}}</td>
+        <td>{{data.title}}</td>
+        <img src="{{data.pictureUrl}}" width="100">
+        <td>{{data.sessionDate| date}}</td>
+        <td>{{data.listPrice|currency:'CAD':'symbol-narrow'}}</td>
+        <td>{{data.discountedPrice|currency:'CAD':'symbol-narrow'}}</td>
+        <td><p class="tableSizing">{{data.description}}</p></td>
+        <td>
+          <a
+          nz-popover
+          nzPopoverTitle="Açıklama"
+          [nzPopoverContent]="contentTemplate"
+          nzPopoverPlacement="left"
+        >
+        {{data.participant}}
+        </a>
+        <ng-template #contentTemplate>
+          <div>
+            <p>{{data.description}}</p>
+          </div>
+        </ng-template>
+          </td>
+        <td>
+            <button nz-button [nzType]="'primary'" (click)="showModal()" (click)="editCourse(data)">
+              <i nz-icon nzType="edit" nzTheme="outline"></i>
+            </button>
+        </td>
+      </tr>
+
+    </tbody>
+  </nz-table>
+
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="KURS BİLGİLERİ DÜZENLE" (nzOnCancel)="handleCancel(courseForm)" (nzOnOk)="handleOk()">
+    <form #courseForm="ngForm">
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="businessId">ID</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <input nz-input name="businessId" type="text" id="businessId"
+           [(ngModel)]="courseEdit.businessId" disabled>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="businessName">Işletme Adı</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input nz-input name="businessName" type="text" id="businessName"
+         [(ngModel)]="courseEdit.businessName" disabled>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="description">Açıklama</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <textarea nz-input name="description" type="text" id="description"
+         [(ngModel)]="courseEdit.description" autocomplete="off" maxlength="255"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="participant">Katılımcı Sayısı</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input nz-input name="participant" type="number" id="participant" 
+        [(ngModel)]="courseEdit.participant" placeholder="Katılımcı sayısını giriniz..." autocomplete="off">
+      </nz-form-control>
+    </nz-form-item >
+  </form>
+  </nz-modal>
