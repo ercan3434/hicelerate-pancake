@@ -29,7 +29,6 @@ registerLocaleData(en);
   ],
   providers: [
     { provide: "apiUrl", useValue: "https://api.zaguru.com/api/Classes/getClasses" },
-    CourseService,
     { provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })
